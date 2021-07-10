@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<!-- Remember to include jQuery :) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+ 
+<style>
+    .color-box {
+        /* width: 1000px; */
+        /* height: 300px; */
+        background-color: #f2edf3;
+        padding: 20px;
+        margin: 100px;
+        font-family: 'Ubuntu', sans-serif;
+     
+    }
+
+    h4 {
+        display: block;
+        font-size: 18px;
+        margin-left: 20px;
+    }
+
+    #top-bar {
+        /* width: 100%; */
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        margin-left: 20px;
+        margin-top: 30px;
+        /* border: 2px solid black; */
+        justify-content: center;
+    }
+
+    #color {
+        display: inline-block;
+        width: 20%;
+        padding: 15px;
+        background-color: black;
+        }
+
+    #color-name {
+        display: inline-block;
+        width: 20%;
+        padding: 15px;
+        background-color: white;
+        text-align: center;
+    }
+
+    #select-color {
+        display: inline-block;
+        width: 20%;
+        /* background-color: purple;         */
+    }
+</style>
+
+<!-- option tab  -->
+<style>
+    .option-tab{
+        margin-top: 25px;
+        /* width: 100%; */
+        margin-left: 20px;
+        margin-right: 20px;
+        background-color: white;
+        border-radius: 5px;
+        /* height: 500px; */
+    }
+
+    li{
+        list-style: none;
+        padding: 0.75rem 1.5rem;
+        border: 1px solid #ebedf2;
+        border-bottom-style: none;
+        background-color: #f6f8fa;
+        cursor: pointer;
+    }
+    a{
+       text-decoration: none;
+       color: black;
+       font-size: 14px;
+    }
+    hr{
+        margin-top: 0px;
+    }
+
+    .divlink-container{
+        padding: 50px;
+        border: 1px solid black;
+         margin-left: 20px; 
+         margin-right: 20px;
+          overflow:hidden;
+    }
+
+  
+</style>
+
+<style>
+    .cancel-button-tab{
+        display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.687rem;
+    border-top: 1px solid #ebedf2;
+    border-bottom-right-radius: calc(0.3rem - 1px);
+    border-bottom-left-radius: calc(0.3rem - 1px);   
+    margin-top: 50px;  
+    }
+    .btn_cancel, .btn_select{
+        cursor: pointer;
+        display: inline-block;
+    font-weight: 500;
+    color: #343a40;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.875rem 2.5rem;
+    font-size: 0.875rem;
+    line-height: 1;
+    border-radius: 0.1875rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .btn_cancel:hover{
+        background: linear-gradient(to right, #da8cff, #9a55ff);
+        border: 0;
+        transition: opacity 0.3s ease;
+        margin-left: 0.5rem !important;
+        color: white;
+        color: black;
+        animation: none;
+    }
+    .btn_outline{
+        color: #b66dff;
+    border-color: #b66dff;
+    }
+    .btn_gredient{
+        background: linear-gradient(to right, #da8cff, #9a55ff);
+        border: 0;
+        transition: opacity 0.3s ease;
+        margin-left: 0.5rem !important;
+        color: white;
+    }
+
+    .modal a.close-modal {
+    position: absolute;
+    top: 25.5px;
+    right: 23.5px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    text-indent: -9999px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);;
+}
+
+
+/* .modal a.close-modal {
+    position: absolute;
+    top: 34.5px;
+    right: 22.5px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    text-indent: -9999px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAA3hJREFUaAXlm8+K00Acx7MiCIJH/yw+gA9g25O49SL4AO3Bp1jw5NvktC+wF88qevK4BU97EmzxUBCEolK/n5gp3W6TTJPfpNPNF37MNsl85/vN/DaTmU6PknC4K+pniqeKJ3k8UnkvDxXJzzy+q/yaxxeVHxW/FNHjgRSeKt4rFoplzaAuHHDBGR2eS9G54reirsmienDCTRt7xwsp+KAoEmt9nLaGitZxrBbPFNaGfPloGw2t4JVamSt8xYW6Dg1oCYo3Yv+rCGViV160oMkcd8SYKnYV1Nb1aEOjCe6L5ZOiLfF120EjWhuBu3YIZt1NQmujnk5F4MgOpURzLfAwOBSTmzp3fpDxuI/pabxpqOoz2r2HLAb0GMbZKlNV5/Hg9XJypguryA7lPF5KMdTZQzHjqxNPhWhzIuAruOl1eNqKEx1tSh5rfbxdw7mOxCq4qS68ZTjKS1YVvilu559vWvFHhh4rZrdyZ69Vmpgdj8fJbDZLJpNJ0uv1cnr/gjrUhQMuI+ANjyuwftQ0bbL6Erp0mM/ny8Fg4M3LtdRxgMtKl3jwmIHVxYXChFy94/Rmpa/pTbNUhstKV+4Rr8lLQ9KlUvJKLyG8yvQ2s9SBy1Jb7jV5a0yapfF6apaZLjLLcWtd4sNrmJUMHyM+1xibTjH82Zh01TNlhsrOhdKTe00uAzZQmN6+KW+sDa/JD2PSVQ873m29yf+1Q9VDzfEYlHi1G5LKBBWZbtEsHbFwb1oYDwr1ZiF/2bnCSg1OBE/pfr9/bWx26UxJL3ONPISOLKUvQza0LZUxSKyjpdTGa/vDEr25rddbMM0Q3O6Lx3rqFvU+x6UrRKQY7tyrZecmD9FODy8uLizTmilwNj0kraNcAJhOp5aGVwsAGD5VmJBrWWbJSgWT9zrzWepQF47RaGSiKfeGx6Szi3gzmX/HHbihwBser4B9UJYpFBNX4R6vTn3VQnez0SymnrHQMsRYGTr1dSk34ljRqS/EMd2pLQ8YBp3a1PLfcqCpo8gtHkZFHKkTX6fs3MY0blKnth66rKCnU0VRGu37ONrQaA4eZDFtWAu2fXj9zjFkxTBOo8F7t926gTp/83Kyzzcy2kZD6xiqxTYnHLRFm3vHiRSwNSjkz3hoIzo8lCKWUlg/YtGs7tObunDAZfpDLbfEI15zsEIY3U/x/gHHc/G1zltnAgAAAABJRU5ErkJggg==);
+} */
+
+</style>
+
+<style>
+  
+ .blocker {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    z-index: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #000;
+    background-color: rgba(0,0,0,0.75);
+    text-align: center;
+} 
+.blocker:before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: -0.05em;
+}
+
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.modal-open .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.modal {
+    position:absolute;
+    top: -10px;
+    left: 0;
+    z-index: 1050;
+    display: none;
+   max-width: 90%;
+}
+
+.modal a.close-modal {
+    position: absolute;
+    top: 25.5px;
+    right: 23.5px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    text-indent: -9999px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("icons8-multiply-48.png");
+}
+</style>
+
+<body>
+    <div>
+        <div  id="ex1" class="color-box jquery-modal modal ">
+            <h4>Pick a color</h4>
+    
+            <div id="top-bar">
+                <div id="color">
+    
+                </div>
+    
+                <div id="color-name">
+                    #dcd2df
+                </div>
+    
+                <div id="select-color">
+                    <button
+                        style="width: 100%; background: linear-gradient(to right, #da8cff, #9a55ff);
+                        border: 0; padding: 15px; border-style: none; height: 100%; cursor: pointer;">
+                        <strong style="color: white;">Select color</strong>
+                    </button>
+                </div>
+            </div>
+    
+            <div class="option-tab">
+              <div style="padding: 20px; background-color: white;"> 
+                <ul style="display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; margin-bottom: 0px;">
+                 <a href="#" onclick="showDiv('');return false"></a>
+                    <li class="link active" onclick="showDiv('1');return false">
+                        <a href="#" >Swatches</a>
+                    </li>
+                    <li class="link" onclick="showDiv('2');return false">
+                        <a href="#" >Palette</a>
+                    </li>
+                    <li class="link" onclick="showDiv('3');return false">
+                        <a href="#">Sliders</a>
+                    </li>
+                    <li class="link" onclick="showDiv('4');return false">
+                        <a href="#">Pick from uploaded image</a>
+                    </li>
+                </ul>
+                <hr>
+                
+    
+            <div id="container"></div>
+                <div id="divLinks">
+                    <div id="container1" class="divlink-container" >swatches tab</div>
+                    <div id="container2" class="divlink-container">plattes tab</div>
+                    <div id="container3" class="divlink-container">sliders tab</div>
+                    <div id="container4" class="divlink-container">upload image tab</div>
+                </div>          
+              </div>
+            </div> 
+           
+            <!-- <a href="#close-modal" rel="modal:close" class="close-modal ">&#88</a> -->
+            <div class="cancel-button-tab">
+                <button class="btn_cancel btn_outline" >Cancel</button>
+                <button class="btn_select btn_gredient" >Select color</button>
+            </div>
+           
+        </div>
+
+      </div>
+      
+      <!-- Link to open the modal -->
+      <p><a href="#ex1"  class="open-modal ">Open Modal</a></p>
+      
+
+
+     
+</body>
+
+</html>
+
+<script>
+    $( document ).ready(function() {
+    console.log( "ready!" );
+    $('a.open-modal').click(function(event) {
+  $(this).modal({
+    fadeDuration: 250, 
+fadeDelay: 0.80  });
+  return false;
+});
+});
+
+</script>
+<script type="text/javascript">
+    window.onload = function() { showDiv('1'); }
+    </script>
+
+<script type="text/javascript">
+   
+    function showDiv(idInfo) {
+      var sel = document.getElementById('divLinks').getElementsByTagName('div');
+      for (var i=0; i<sel.length; i++) {
+        sel[i].style.display = 'none';
+      }
+      document.getElementById('container'+idInfo).style.display = 'block';
+    }
+       </script>
